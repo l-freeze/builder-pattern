@@ -1,0 +1,42 @@
+version: '3.7'
+x-common-env: 
+  &common-env
+  APP_NAME: ${APP_NAME}
+  APP_ROOT: ${APP_ROOT}
+  MYSQL_DATABASE: ${MYSQL_DATABASE}
+  MYSQL_USER: ${MYSQL_USER}
+  MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+
+services:
+  php:
+    build: 
+      context: ./docker/php
+      # dockerfile: DebianDockerfile
+      args:
+        <<: *common-env
+    image: ${APP_NAME}-php:alpine
+    container_name: ${APP_NAME}-php
+    #restart: always
+    environment:
+      <<: *common-env
+      NON_COMMON_ENV: 'non_common_env'
+    #depends_on:
+    #  - mysql
+    #  - redis
+    volumes:
+      - ./:${APP_ROOT}/
+    networks:
+      app_net: 
+        # ipv4_address: 192.168.20.10
+
+networks:
+  app_net:
+    name: ${APP_NAME}_net
+    driver: bridge
+    # ipam:
+    #  driver: default
+    #  config:
+    #    - subnet: 192.168.20.0/24
+    #      gateway: 192.168.20.1

@@ -1,0 +1,39 @@
+version: '3'
+
+#silent: true #[task COMMAND -s]と同等
+tasks:
+  up:
+    cmds:
+      - docker compose up -d
+  rebuild:
+    cmds:
+      - docker compose up -d --build
+  down:
+    cmds:
+      - docker compose down
+  restart:
+    cmds:
+      - docker compose restart php
+  reset:
+    cmds:
+      - docker compose down --rmi all --volumes --remove-orphans
+  ps:
+    cmds:
+      - cmd: docker compose ps -a
+        slient: false
+  bash:
+    cmds:
+      #- docker compose exec -T ash php
+      - docker compose exec php ash
+
+  php:
+    cmds:
+      - docker compose exec php php {{.CLI_ARGS}}
+
+  composer:
+    cmds:
+      - docker compose exec php /usr/bin/composer {{.CLI_ARGS}}
+  
+  check:arguments:
+    cmds:
+      - echo "{{.CLI_ARGS}}"

@@ -1,0 +1,16 @@
+{
+    "name": "l-freeze/builder-pattern",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LFreeze\\BuilderPattern\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "l-freeze"
+        }
+    ],
+    "require": {}
+}
